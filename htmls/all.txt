@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <main class="app">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      
+      <div class="title-block">
+        <h1>🌤 Weather Dashboard</h1>
+        <p class="subtitle">Get real-time weather updates instantly</p>
+      </div>
+
+      <!-- Dark Mode Toggle -->
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+        🌙
+      </button>
+
+    </header>
+
+    <!-- SEARCH -->
+    <section class="search-section">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="cityInput" 
+          placeholder="Enter city name..."
+          autocomplete="off"
+        />
+
+        <button id="searchBtn">
+          Search
+        </button>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="history-section">
+      <h2>Recent Searches</h2>
+      <div id="history" class="history-list"></div>
+    </section>
+
+    <!-- WEATHER -->
+    <section id="weather" class="weather-card"></section>
+
+    <!-- FORECAST -->
+    <section id="forecast" class="forecast-container"></section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

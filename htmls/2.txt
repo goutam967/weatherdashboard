@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A real-time weather dashboard showing current conditions and forecasts for any city." />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <title>Weather Dashboard | Real-Time Forecast</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <main class="app" role="main">
+
+    <!-- HEADER -->
+    <header class="app-header">
+
+      <div class="title-block">
+        <h1>🌤 Weather Dashboard</h1>
+        <p class="subtitle">Real-time weather updates for any city worldwide</p>
+      </div>
+
+      <button 
+        id="themeToggle" 
+        class="theme-toggle"
+        aria-label="Toggle dark mode"
+        title="Toggle theme"
+      >
+        🌙
+      </button>
+
+    </header>
+
+    <!-- SEARCH -->
+    <section class="search-section" aria-label="Search weather">
+      <form class="search-box" id="searchForm">
+
+        <label for="cityInput" class="visually-hidden">
+          Enter city name
+        </label>
+
+        <input 
+          type="text" 
+          id="cityInput" 
+          name="city"
+          placeholder="Search for a city (e.g. London, Mumbai)..."
+          autocomplete="off"
+          required
+        />
+
+        <button type="submit" id="searchBtn">
+          Search
+        </button>
+
+      </form>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="history-section" aria-label="Recent searches">
+      <h2>Recent Searches</h2>
+      <div id="history" class="history-list"></div>
+    </section>
+
+    <!-- CURRENT WEATHER -->
+    <section 
+      id="weather" 
+      class="weather-card"
+      aria-live="polite"
+    ></section>
+
+    <!-- FORECAST -->
+    <section 
+      id="forecast" 
+      class="forecast-container"
+      aria-label="Weather forecast"
+    ></section>
+
+  </main>
+
+  <script src="script.js" defer></script>
+
+</body>
+</html>

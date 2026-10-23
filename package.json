@@ -1,0 +1,24 @@
+{
+  "name": "skycast-weather-dashboard",
+  "version": "1.0.0",
+  "description": "iOS 18 Ultra Style Weather Dashboard built for Vercel deployment",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "serve ."
+  },
+  "keywords": [
+    "weather",
+    "dashboard",
+    "vercel",
+    "serverless",
+    "pwa",
+    "ios18",
+    "glassmorphism"
+  ],
+  "author": "Varun Khatri",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

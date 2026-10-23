@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007aff">
+  <meta name="description" content="SkyCast - Ultra Modern iOS 18 Glassmorphism Weather Dashboard with real-time updates and smart atmospheric forecasting.">
+  <title>SkyCast | iOS 18 Weather</title>
+  
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <!-- Open Graph / Social Sharing for Vercel -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SkyCast | iOS 18 Weather Dashboard">
+  <meta property="og:description" content="Real-time weather conditions, 5-day forecast, air quality, and atmospheric predictions.">
+  <meta property="og:image" content="/icon-512.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SkyCast | iOS 18 Weather Dashboard">
+  <meta name="twitter:description" content="Real-time weather conditions, 5-day forecast, air quality, and atmospheric predictions.">
+  <meta name="twitter:image" content="/icon-512.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="weatherBg"></div>
+  <div id="cloudsBg" class="clouds-container">
+    <div class="cloud-img"></div>
+    <div class="cloud-img"></div>
+    <div class="cloud-img"></div>
+    <div class="cloud-img"></div>
+    <div class="cloud-img"></div>
+  </div>
+  <div id="starsBg" class="stars-container"></div>
+  <div id="rainContainer"></div>
+  
+  <main class="app">
+    <!-- Header -->
+    <header class="glass-card header">
+      <div class="brand">
+        <div class="brand-icon">🌤️</div>
+        <div>
+          <h1>SkyCast</h1>
+          <p>Weather</p>
+        </div>
+      </div>
+      <button id="darkModeToggle" class="theme-btn">☀️</button>
+    </header>
+    
+    <!-- Search -->
+    <section class="glass-card search">
+      <form id="searchForm" class="search-form">
+        <div class="search-field">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="cityInput" placeholder="Search city" autocomplete="off">
+        </div>
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+    </section>
+    
+    <div id="status" class="status"></div>
+    
+    <!-- Main Weather -->
+    <section class="glass-card main-weather">
+      <div id="weather"></div>
+    </section>
+    
+    <!-- Hourly Forecast -->
+    <section class="glass-card hourly">
+      <h3>Hourly Forecast</h3>
+      <div id="hourly" class="hourly-scroll"></div>
+    </section>
+    
+    <!-- Weekly Forecast -->
+    <section class="glass-card weekly">
+      <h3>📅 5-Day Forecast</h3>
+      <div id="forecast" class="weekly-list"></div>
+    </section>
+    
+    <!-- Weather Details -->
+    <section class="glass-card details">
+      <h3>Details</h3>
+      <div class="details-content">
+        <div class="details-row" id="details"></div>
+      </div>
+    </section>
+    
+    <!-- Sun Track -->
+    <section class="glass-card sun-track">
+      <h3>Sun & Moon</h3>
+      <div class="sun-track-grid">
+        <div class="sun-item">
+          <i class="fa-solid fa-sun" style="color: #ff9500;"></i>
+          <span class="time" id="sunrise">6:30 AM</span>
+          <span class="label">Sunrise</span>
+        </div>
+        <div class="sun-item">
+          <i class="fa-solid fa-moon" style="color: #5ac8fa;"></i>
+          <span class="time" id="sunset">6:30 PM</span>
+          <span class="label">Sunset</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Air Quality -->
+    <section class="glass-card air-quality">
+      <h3>Air Quality</h3>
+      <div id="airQuality" class="air-card">
+        <div class="aqi good">32</div>
+        <div class="info">
+          <div class="title">Good</div>
+          <div class="status">Air quality is satisfactory</div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- UV Index -->
+    <section class="glass-card details">
+      <h3>UV Index & Visibility</h3>
+      <div class="details-content">
+        <div class="details-row" id="uvIndex">
+          <div class="detail-card">
+            <span class="icon">☀️</span>
+            <span class="label">UV Index</span>
+            <span class="value" id="uvValue">3</span>
+            <span class="desc">Moderate</span>
+          </div>
+          <div class="detail-card">
+            <span class="icon">👁️</span>
+            <span class="label">Visibility</span>
+            <span class="value" id="visibility">10 km</span>
+            <span class="desc">Great</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Future Prediction -->
+    <section class="glass-card prediction">
+      <h3>📈 Weather Prediction</h3>
+      <div class="prediction-content">
+        <div class="prediction-row">
+          <div class="prediction-card">
+            <span class="pred-icon">🌡️</span>
+            <div class="pred-info">
+              <span class="pred-label">Tomorrow</span>
+              <span class="pred-value" id="tomorrowTemp">--</span>
+              <span class="pred-desc" id="tomorrowTrend">--</span>
+            </div>
+          </div>
+          <div class="prediction-card">
+            <span class="pred-icon">🌧️</span>
+            <div class="pred-info">
+              <span class="pred-label">Rain Chance</span>
+              <span class="pred-value" id="rainChance">--</span>
+              <span class="pred-desc" id="rainDesc">--</span>
+            </div>
+          </div>
+          <div class="prediction-card">
+            <span class="pred-icon">💨</span>
+            <div class="pred-info">
+              <span class="pred-label">Wind Trend</span>
+              <span class="pred-value" id="windTrend">--</span>
+              <span class="pred-desc" id="windDesc">--</span>
+            </div>
+          </div>
+        </div>
+        <div class="prediction-row">
+          <div class="prediction-card">
+            <span class="pred-icon">💧</span>
+            <div class="pred-info">
+              <span class="pred-label">Humidity</span>
+              <span class="pred-value" id="humidityTrend">--</span>
+              <span class="pred-desc" id="humidityDesc">--</span>
+            </div>
+          </div>
+          <div class="prediction-card">
+            <span class="pred-icon">📊</span>
+            <div class="pred-info">
+              <span class="pred-label">Pressure</span>
+              <span class="pred-value" id="pressureTrend">--</span>
+              <span class="pred-desc" id="pressureDesc">--</span>
+            </div>
+          </div>
+          <div class="prediction-card">
+            <span class="pred-icon">🔮</span>
+            <div class="pred-info">
+              <span class="pred-label">5-Day Trend</span>
+              <span class="pred-value" id="trendOutlook">--</span>
+              <span class="pred-desc" id="trendDesc">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- History -->
+    <section class="glass-card history">
+      <h3>Recent Searches</h3>
+      <div id="history" class="history-content">
+        <div class="history-list"></div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="brand-footer">
+    <span class="brand-text">SkyCast</span>
+    <span class="brand-credit">by <strong>Varun Khatri</strong></span>
+  </footer>
+  
+  <script src="script.js"></script>
+</body>
+</html>
